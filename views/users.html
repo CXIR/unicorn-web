@@ -1,0 +1,42 @@
+<section>
+  <title>Les Utilisateurs</title>
+
+  <div my-nav></div>
+
+    <div class="jumbotron main-wrapper-pad">
+      <div class="form-group">
+        <h2>Rechercher un Utilisateur :</h2>
+        <div class="search-lg">
+          <input class="form-control" placeholder="Nom, Prénom, Site..." type="text" ng-model="usrfilter">
+          <a class="btn btn-primary" ng-click="">Rechercher</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-wrapper">
+
+      <div class="panel panel-default box"><!-- ng-repeat="user in users" -->
+        <div class="panel-body">
+          <div class="box-section">
+            <a href="" ng-click="userPop(ride.user)">
+              <img src="toolbox/asset/images/default.png" width="100" height="100"/>
+            </a>
+          </div>
+          <div class="box-section">
+            <p>Nom : {{ user.name | uppercase }} {{ user.first }}</p>
+            <p>Âge : {{ user.birth }}</p>
+            <p>Bureau : {{ user.office }}</p>
+          </div>
+          <div class="box-section check">
+            <i class="fa fa-thumbs-up fa-2x text-info" aria-hidden="true"></i>{{ user.mark.up }}
+            <i class="fa fa-thumbs-down fa-2x text-danger" aria-hidden="true"></i>{{ user.mark.down }}
+          </div>
+        </div>
+        <div class="panel-footer">
+          <a href="" ng-click="details = true">Voir le Profil <i class="fa fa-chevron-right fa-1x"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+</section>

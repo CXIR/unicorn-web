@@ -1,0 +1,62 @@
+/** GENERAL */
+
+.navbar{ position: fixed; width: 100%; top: 0px; }
+
+.main-wrapper-pad{ width: 90%; margin: 5%; padding: 5%; }
+.main-wrapper{ width: 90%; margin: 5%;}
+.search-lg{ width: 100%; }
+.search-lg input[type="text"]{ width: 85%; float: left; }
+
+.s-component{ width: 30%; padding: 1em; margin-left: 1em; float: left; }
+
+.box{ width: 50%;  margin-left: 25%; }
+.box-section{ float: left; margin-left: 5%; height: 11em; }
+
+.box-section a{ text-align: center;  margin-top: 7em; margin-left: 3em; }
+.box-section img{ text-align: center; margin-top: 3em; margin-right: 1em; }
+.box-section p{ margin-left: 1em; margin-top: 1em; }
+.check i{ text-align: center;  margin-top: 1.5em; margin-left: 3em;}
+
+.navbar-nav .badge{ margin-left: 0.5em; background-color: #e74c3c; color: #ffffff; }
+.nav-fix{ height: 5em; }
+
+.txtarea{ max-width: 100%; }
+
+/** USERS */
+
+.user-pop{ width: 40%; margin-left: 30%; position: fixed; z-index: 500; margin-top: 5em; }
+.user-pop .panel-body{ text-align: center; }
+.user-pop-rides{ height: 10em; overflow: scroll; }
+.user-pop .panel-heading{ text-align: center; }
+
+.user-pop .table-icon{ width: 5%; }
+.user-pop .table-info{ width: 45%; text-align: left; font-size: 14px; padding-left: 1em; }
+.user-pop table{ margin: 1em; }
+
+/** LOGIN */
+
+.login-title{ text-align: center; }
+.login-form{ width: 50%; margin-left: 25%; margin-top: 2em; }
+.login-form input[type="text"]{ width: 90%; margin-left: 5%; }
+.login-action{ text-align: right; margin-right: 5%;  }
+
+/** PROFIL */
+.profil-header{ width: 100%; }
+.profil-section{ float: left; margin-right: 5%; width: auto; height: 15em; }
+
+.profil a{ margin-top: 1em; margin-bottom: 1em; }
+.profil h3{ margin-left: 2%; }
+.content{ width: 50%; margin-left: 25%; }
+
+/** RIDES */
+.rides-head{ width: 100%; }
+.rides-head a{ margin-left: 84%; }
+.rides-head h2{ margin-left: 1em; margin-top: 1em; }
+
+/* MESSAGES */
+
+.msg{ width: 50%; margin-left: 25%; }
+.msg-section{ float: left; }
+.st{ width: 20%; }
+.lg{ width: 60%; }
+.send{ }

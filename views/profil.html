@@ -1,0 +1,129 @@
+<section>
+  <title>{{ user.name | uppercase }} {{ user.first }}</title>
+
+  <div user-pop></div>
+  <div my-nav class="nav-fix"></div>
+
+  <div class="main-wrapper">
+
+    <div class="profil-header">
+
+      <div class="profil-section">
+          <img src="toolbox/asset/images/default.png" width="150"/>
+      </div>
+      <div class="profil-section">
+        <blockquote>
+          <p>{{ user.name | uppercase }} {{ user.first }}</p>
+          <p>{{ user.age }} ans</p>
+          <p>Bureau :{{ user.office }}</p>
+          <i class="fa fa-thumbs-up fa-2x text-info" aria-hidden="true"></i>{{ user.mark.up }}
+          <i class="fa fa-thumbs-down fa-2x text-danger" aria-hidden="true"></i>{{ user.mark.down }}
+        </blockquote>
+      </div>
+      <div class="profil-section">
+        <blockquote>
+          <img src="toolbox/asset/images/car.png" width="50" height="50"/>
+          <p>Marque : {{ user.car.brand }}</p>
+          <p>Modèle : {{ user.car.model }}</p>
+          <p>Année : {{ user.car.year }}</p>
+        </blockquote>
+      </div>
+
+    </div><div style="clear:both;"></div>
+
+    <hr/>
+
+    <div class="profil">
+      <a href="" class="btn btn-success">Proposer un Trajet</a>
+      <a href="#/rides" class="btn btn-primary">Rechercher un Trajet</a>
+
+      <!-- Comming Rides -->
+      <div class="panel panel-default">
+        <h3>
+          Trajets à venir
+          <a href="" ng-show="comming" ng-click="comming = true"><i class="fa fa-chevron-down"></i></a>
+          <a href="" ng-show="!comming" ng-click="comming = false"><i class="fa fa-chevron-up"></i></a>
+        </h3>
+        <div ng-show="!comming">
+
+        <div class="panel panel-primary content">
+          <div class="panel-heading">
+            <h4 class="panel-title">Passager</h4>
+          </div>
+          <div class="panel-body">
+            <div class="box-section">
+              <a href="" ng-click="userPop(ride.user)">
+                <img src="toolbox/asset/images/default.png" width="100" height="100"/>
+              </a>
+            </div>
+            <div class="box-section">
+              <p>Driver : {{ ride.user.name | uppercase }} {{ ride.user.first }}</p>
+              <p>{{ ride.departure }} <i class="fa fa-arrow-right fa-1x"></i> {{ ride.arrival }}</p>
+              <p>Le {{ ride.date }} à {{ ride.hour }}</p>
+              <p>Places Disponibles : {{ ride.seats }}</p>
+            </div>
+            <div class="box-section check">
+              <i ng-show="false" class="fa fa-check-circle fa-3x text-success"></i>
+              <i ng-show="true" class="fa fa-exclamation-circle fa-3x text-warning"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-success content">
+          <div class="panel-heading">
+            <h4 class="panel-title">Conducteur</h4>
+          </div>
+          <div class="panel-body">
+          </div>
+        </div>
+
+        </div>
+      </div>
+
+      <!-- Passed Rides -->
+      <div class="panel panel-default">
+        <h3>
+          Trajets passés
+          <a href="" ng-show="!over" ng-click="over = true"><i class="fa fa-chevron-down"></i></a>
+          <a href="" ng-show="over" ng-click="over = false"><i class="fa fa-chevron-up"></i></a>
+        </h3>
+        <div ng-show="over">
+
+        <div class="panel panel-primary content">
+          <div class="panel-heading">
+            <h2 class="panel-title">Passager</h2>
+          </div>
+          <div class="panel-body">
+            <a href="" ng-click="userPop(ride.user)">
+              <img src="toolbox/asset/images/default.png" width="100" height="100"/>
+            </a>
+          </div>
+        </div>
+
+        <div class="panel panel-success content">
+          <div class="panel-heading">
+            <h2 class="panel-title">Conducteur</h2>
+          </div>
+          <div class="panel-body">
+          </div>
+        </div>
+
+      </div>
+      </div>
+
+      <!-- Refused Rides -->
+      <div class="panel panel-default">
+        <h3 class="text-danger">
+          Trajets Refusés
+          <a href="" ng-show="!refused" ng-click="refused = true"><i class="fa fa-chevron-down"></i></a>
+          <a href="" ng-show="refused" ng-click="refused = false"><i class="fa fa-chevron-up"></i></a>
+        </h3>
+        <div ng-show="refused">
+
+        </div>
+      </div>
+
+    </div>
+
+</div>
+</section>
