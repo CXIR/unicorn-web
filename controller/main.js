@@ -283,7 +283,7 @@ shareAppControllers.controller('profilCtrl',['$scope','$location',
     function($scope,$location){
         var url = $location.path().split(/\//g);
         $scope.who = url[2];
-        
+
     }
 ]);
 
@@ -298,6 +298,9 @@ shareAppControllers.controller('usersCtrl',['$scope','$location',
 shareAppControllers.controller('reportCtrl',['$scope','$location',
     function($scope,$location){
         $scope.current = $location.path();
+        /**
+        * Monitoring Git
+        */
     }
 ]);
 
