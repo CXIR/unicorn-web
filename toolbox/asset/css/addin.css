@@ -1,6 +1,6 @@
 /** GENERAL */
 
-.navbar{ position: fixed; width: 100%; top: 0px; }
+.navbar{ position: fixed; width: 100%; top: 0px; z-index: 1; }
 
 .main-wrapper-pad{ width: 90%; margin: 5%; padding: 5%; }
 .main-wrapper{ width: 90%; margin: 5%;}
@@ -17,10 +17,14 @@
 .box-section p{ margin-left: 1em; margin-top: 1em; }
 .check i{ text-align: center;  margin-top: 1.5em; margin-left: 3em;}
 
+.box-section-lg{ float: left; width: 40%; margin-left: 5%; }
+
 .navbar-nav .badge{ margin-left: 0.5em; background-color: #e74c3c; color: #ffffff; }
 .nav-fix{ height: 5em; }
 
 .txtarea{ max-width: 100%; }
+
+.times{ width: 100%; text-align: right; }
 
 /** USERS */
 
