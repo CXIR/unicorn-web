@@ -68,9 +68,13 @@ shareApp.config(['$routeProvider','$locationProvider',
           templateUrl: 'views/profil.html',
           controller: 'profilCtrl'
         })
-        .when('/messaging',{
-            templateUrl: 'views/messaging.html',
-            controller: 'messagingCtrl'
+        .when('/message',{
+          templateUrl: 'views/message.html',
+          controller: 'messageCtrl'
+        })
+        .when('/new_message',{
+          templateUrl: 'views/new_message.html',
+          controller: 'newMessageCtrl'
         })
         .when('/about',{
             templateUrl: 'views/about.html',
@@ -104,7 +108,14 @@ shareApp.directive('myNav',['$location',function($location){
         if(current[1] == 'profil') angular.element(document.querySelector('#profil')).addClass('active');
         else if(current[1] == 'users') angular.element(document.querySelector('#users')).addClass('active');
         else if(current[1] == 'rides') angular.element(document.querySelector('#rides')).addClass('active');
-        else if(current[1] == 'messaging') angular.element(document.querySelector('#messaging')).addClass('active');
+        else if(current[1] == 'message') angular.element(document.querySelector('#message')).addClass('active');
+
+        /*
+        $http.get(node_url)
+        .then(fucntion(res){
+          scope.unread = res.data;
+        },function(res){ console.log('FAIL : '+res.data); });
+        */
     }
   };
 }]);
@@ -331,11 +342,9 @@ shareAppControllers.controller('loginCtrl',['$scope',
 shareAppControllers.controller('profilCtrl',['$scope','$location','$route','$http',
     function($scope,$location,$route,$http){
         var url = $location.path().split(/\//g);
-        $scope.who = url[2];
-        var node_url = '';
 
         /** Get user profile information */
-        $http.get(node_url)
+        $http.get('/user/find/'+url[2])
         .then(function(res){
           if(res.data != 0){
             $scope.user = res.data;
@@ -434,18 +443,23 @@ shareAppControllers.controller('profilCtrl',['$scope','$location','$route','$htt
 /**
 * View : users
 */
-shareAppControllers.controller('usersCtrl',['$scope','$location',
-    function($scope,$location){
+shareAppControllers.controller('usersCtrl',['$scope','$location','$http',
+    function($scope,$location,$http){
         $scope.current = $location.path();
-        var node_url = '';
 
+        /** Get all users */
         var getUsers = function(){
-          $http.get(node_url)
+          $http.get('/user/find/all')
           .then(function(res){
             if(res.data != 0){
               $scope.users = res.data;
             }
           },function(res){ console.log('FAIL : '+res.data); });
+        }; getUsers();
+
+        /** Display a user preview by popup when clicking on picture */
+        $scope.userPreview = function(user){
+
         }
     }
 ]);
@@ -455,7 +469,7 @@ shareAppControllers.controller('usersCtrl',['$scope','$location',
 */
 shareAppControllers.controller('reportCtrl',['$scope','$location',
     function($scope,$location){
-        $scope.current = $location.path();
+
 
     }
 ]);
@@ -465,7 +479,11 @@ shareAppControllers.controller('reportCtrl',['$scope','$location',
 */
 shareAppControllers.controller('ridesCtrl',['$scope','$location',
     function($scope,$location){
-        $scope.current = $location.path();
+
+      /** Display a user preview by popup when clicking on picture */
+      $scope.userPreview = function(user){
+
+      }
     }
 ]);
 
@@ -473,10 +491,50 @@ shareAppControllers.controller('ridesCtrl',['$scope','$location',
 /**
 * View : message
 */
-shareAppControllers.controller('messagingCtrl',['$scope','$location',
-    function($scope,$location){
-        $scope.current = $location.path();
+shareAppControllers.controller('messageCtrl',['$scope','$location','$http',
+    function($scope,$location,$http){
+      var node_url = '';
+
+      /** Get all unread messages preview of the current user */
+      var getUnreadMessages = function(){
+        $http.get(node_url)
+        .then(function(res){
+          if(res.data != 0){
+            $scope.unread_talks = res.data;
+          }
+        },function(res){ console.log('FAIL : '+res.data); });
+      }; getUnreadMessages();
+
+      /** Get all read messages preview of the current user */
+      var getReadMessages = function(){
+        $http.get(node_url)
+        .then(function(res){
+          if(res.data != 0){
+            $scope.read_talks = res.data;
+          }
+        },function(res){ console.log('FAIL : '+res.data); });
+      }; getReadMessages();
+
+      /** Show full talk in parameter */
+      $scope.showTalk = function(talk){
+
+      }
+
+      /** Reply in a talk */
+      $scope.talkReply = function(reply){
+
+      }
+
     }
+]);
+
+/*
+* View : new message
+*/
+shareAppControllers.controller('newMessageCtrl',['$scope','$http',
+  function($scope,$http){
+
+  }
 ]);
 
 /**
@@ -484,6 +542,6 @@ shareAppControllers.controller('messagingCtrl',['$scope','$location',
 */
 shareAppControllers.controller('aboutCtrl',['$scope','$location',
     function($scope,$location){
-        $scope.current = $location.path();
+
     }
 ]);
