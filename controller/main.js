@@ -23,7 +23,11 @@
 
 
 
-/** DECLARATION */
+/**
+*
+* MAIN DECLARATION
+*
+*/
 
 
 var shareApp = angular.module('shareApp',[
@@ -33,7 +37,11 @@ var shareApp = angular.module('shareApp',[
 ]);
 
 
-/** ROUTE */
+/**
+*
+* APP ROUTE
+*
+*/
 
 
 shareApp.config(['$routeProvider','$locationProvider',
@@ -60,9 +68,13 @@ shareApp.config(['$routeProvider','$locationProvider',
           templateUrl: 'views/profil.html',
           controller: 'profilCtrl'
         })
-        .when('/messaging',{
-            templateUrl: 'views/messaging.html',
-            controller: 'messagingCtrl'
+        .when('/message',{
+          templateUrl: 'views/message.html',
+          controller: 'messageCtrl'
+        })
+        .when('/new_message',{
+          templateUrl: 'views/new_message.html',
+          controller: 'newMessageCtrl'
         })
         .when('/about',{
             templateUrl: 'views/about.html',
@@ -76,7 +88,11 @@ shareApp.config(['$routeProvider','$locationProvider',
 
 
 
-/** DIRECTIVES */
+/**
+*
+* DIRECTIVES
+*
+*/
 
 
 
@@ -92,7 +108,14 @@ shareApp.directive('myNav',['$location',function($location){
         if(current[1] == 'profil') angular.element(document.querySelector('#profil')).addClass('active');
         else if(current[1] == 'users') angular.element(document.querySelector('#users')).addClass('active');
         else if(current[1] == 'rides') angular.element(document.querySelector('#rides')).addClass('active');
-        else if(current[1] == 'messaging') angular.element(document.querySelector('#messaging')).addClass('active');
+        else if(current[1] == 'message') angular.element(document.querySelector('#message')).addClass('active');
+
+        /*
+        $http.get(node_url)
+        .then(fucntion(res){
+          scope.unread = res.data;
+        },function(res){ console.log('FAIL : '+res.data); });
+        */
     }
   };
 }]);
@@ -257,68 +280,268 @@ shareApp.directive('datepicker',[
 ]);
 
 
-/** CONTROLLERS */
+/**
+*
+* CONTROLLERS
+*
+*/
 
 
 
 var shareAppControllers = angular.module('shareAppControllers',[]);
 
 
-//view : login
+/**
+*View : login
+*/
 shareAppControllers.controller('loginCtrl',['$scope',
     function($scope){
         $scope.reset = function(){
             $scope.log = {};
-            angular.element(document.querySelector('#id, #pw')).removeClass('has-error');
+            $scope.error = {};
+            angular.element(document.querySelector('#pin')).removeClass('has-error');
+            angular.element(document.querySelector('#pw')).removeClass('has-error');
         }
 
         $scope.login = function(log){
-            angular.element(document.querySelector('#id')).addClass('has-error');
+          angular.element(document.querySelector('#pin')).removeClass('has-error');
+          angular.element(document.querySelector('#pw')).removeClass('has-error');
+
+          if((log.pin == null && log.pw == null) || (log.pin == '' && log.pw == '')){
+            angular.element(document.querySelector('#pin, #pw')).addClass('has-error');
+            $scope.error = {uncorrect:true,message:'Remplissez les champs ci-dessous'};
+          }
+          else if(log.pin.match(/\s+/g) && log.pw.match(/\s+/g)){
+            angular.element(document.querySelector('#pin, #pw')).addClass('has-error');
+            $scope.error = {uncorrect:true,message:'Remplissez les champs ci-dessous'};
+          }
+          else if(log.pin.match(/\s+/g) || log.pin == null || log.pin == ''){
+            angular.element(document.querySelector('#pin')).addClass('has-error');
+            $scope.error = {uncorrect:true,message:'Votre identifiant est incorrect'};
+          }
+          else if(log.pw.match(/\s+/g) || log.pw == null || log.pw == ''){
+            angular.element(document.querySelector('#pw')).addClass('has-error');
+            $scope.error = {uncorrect:true,message:'Le Mot de Passe est obligatoire'};
+          }
+          else{
+            $scope.loading = true;
+            /*
+            $http.post('',{'pin':log.pin,'pw':log.pw})
+            .then(function(res){
+
+            }, function(res) { console.log('FAIL : '+res.data); });
+            */
+          }
         }
     }
 ]);
 
-//view : my profile
-shareAppControllers.controller('profilCtrl',['$scope','$location',
-    function($scope,$location){
+/**
+* View : my profile
+*/
+shareAppControllers.controller('profilCtrl',['$scope','$location','$route','$http',
+    function($scope,$location,$route,$http){
         var url = $location.path().split(/\//g);
-        $scope.who = url[2];
-        
+
+        /** Get user profile information */
+        $http.get('/user/find/'+url[2])
+        .then(function(res){
+          if(res.data != 0){
+            $scope.user = res.data;
+          }
+        },function(res){ console.log('FAIL : '+res.data); });
+
+        /** Get user profile comming rides as Passenger */
+        var getPassengerCommingRides = function(){
+          $http.get(node_url)
+          .then(function(res){
+            if(res.data != 0){
+              $scope.p_comming_rides = res.data;
+            }
+          },function(res){ console.log('FAIL : '+res.data); });
+        }; getPassengerCommingRides();
+
+        /** Get user profile comming rides as Driver */
+        var getDriverCommingRides = function(){
+          $http.get(node_url)
+          .then(function(res){
+            if(res.data != 0){
+              $scope.d_comming_rides = res.data;
+            }
+          },function(res){ console.log('FAIL : '+res.data); });
+        }; getDriverCommingRides();
+
+        /** Get user profile over rides as Passenger */
+        var getPassengerOverRides = function(){
+          $http.get(node_url)
+          .then(function(res){
+            if(res.data != 0){
+              $scope.p_over_rides = res.data;
+            }
+          },function(res){ console.log('FAIL : '+res.data); });
+        }; getPassengerOverRides();
+
+        /** Get user profile over rides as Driver */
+        var getDriverOverRides = function(){
+          $http.get(node_url)
+          .then(function(res){
+            if(res.data != 0){
+              $scope.d_over_rides = res.data;
+            }
+          },function(res){ console.log('FAIL : '+res.data); });
+        }; getDriverOverRides();
+
+        /** Get user profile refused rides as Passenger only */
+        var getPassengerRefusedRides = function(){
+          $http.get(node_url)
+          .then(function(res){
+            if(res.data != 0){
+              $scope.p_refused_rides = res.data;
+            }
+          },function(res){ console.log('FAIL : '+res.data); });
+        }; getPassengerRefusedRides();
+
+        /** Call to ride proposal box */
+        $scope.rideProposal = function(user){
+
+        }
+
+        /** Accept passenger asking for a seat in a ride */
+        $scope.acceptPassenger = function(ride,participant){
+
+        }
+
+        /** Refuse passenger asking for a seat in a ride */
+        $scope.refusePessenger = function(ride,participant){
+
+        }
+
+        /** Mark up a Driver after a ride */
+        $scope.markDriverUp = function(driver){
+
+        }
+
+        /** Mark down a driver after a ride */
+        $scope.markDriverDown = function(driver){
+
+        }
+
+        /** Mark up a passenger after a ride */
+        $scope.markPassengerUp = function(ride,user){
+
+        }
+
+        /** Mark down a passenger after a ride */
+        $scope.markPassengerDown = function(ride,user){
+
+        }
+
+
     }
 ]);
 
-//view : users
-shareAppControllers.controller('usersCtrl',['$scope','$location',
-    function($scope,$location){
+/**
+* View : users
+*/
+shareAppControllers.controller('usersCtrl',['$scope','$location','$http',
+    function($scope,$location,$http){
         $scope.current = $location.path();
+
+        /** Get all users */
+        var getUsers = function(){
+          $http.get('/user/find/all')
+          .then(function(res){
+            if(res.data != 0){
+              $scope.users = res.data;
+            }
+          },function(res){ console.log('FAIL : '+res.data); });
+        }; getUsers();
+
+        /** Display a user preview by popup when clicking on picture */
+        $scope.userPreview = function(user){
+
+        }
     }
 ]);
 
-//view : report a user
+/**
+* View : report a user
+*/
 shareAppControllers.controller('reportCtrl',['$scope','$location',
     function($scope,$location){
-        $scope.current = $location.path();
+
+
     }
 ]);
 
-//view : rides
+/**
+* View : rides
+*/
 shareAppControllers.controller('ridesCtrl',['$scope','$location',
     function($scope,$location){
-        $scope.current = $location.path();
+
+      /** Display a user preview by popup when clicking on picture */
+      $scope.userPreview = function(user){
+
+      }
     }
 ]);
 
 
-//view : messaging
-shareAppControllers.controller('messagingCtrl',['$scope','$location',
-    function($scope,$location){
-        $scope.current = $location.path();
+/**
+* View : message
+*/
+shareAppControllers.controller('messageCtrl',['$scope','$location','$http',
+    function($scope,$location,$http){
+      var node_url = '';
+
+      /** Get all unread messages preview of the current user */
+      var getUnreadMessages = function(){
+        $http.get(node_url)
+        .then(function(res){
+          if(res.data != 0){
+            $scope.unread_talks = res.data;
+          }
+        },function(res){ console.log('FAIL : '+res.data); });
+      }; getUnreadMessages();
+
+      /** Get all read messages preview of the current user */
+      var getReadMessages = function(){
+        $http.get(node_url)
+        .then(function(res){
+          if(res.data != 0){
+            $scope.read_talks = res.data;
+          }
+        },function(res){ console.log('FAIL : '+res.data); });
+      }; getReadMessages();
+
+      /** Show full talk in parameter */
+      $scope.showTalk = function(talk){
+
+      }
+
+      /** Reply in a talk */
+      $scope.talkReply = function(reply){
+
+      }
+
     }
 ]);
 
-//view : about
+/*
+* View : new message
+*/
+shareAppControllers.controller('newMessageCtrl',['$scope','$http',
+  function($scope,$http){
+
+  }
+]);
+
+/**
+* View : about
+*/
 shareAppControllers.controller('aboutCtrl',['$scope','$location',
     function($scope,$location){
-        $scope.current = $location.path();
+
     }
 ]);

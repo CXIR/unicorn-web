@@ -13,28 +13,34 @@
       </div>
     </div>
 
-    <div class="main-wrapper">
+    <hr/>
 
-      <div class="panel panel-default box"><!-- ng-repeat="user in users" -->
+    <div class="main-wrapper">
+      <div class="loading">
+        <i class="fa fa-circle-o-notch fa-5x fa-spin"></i>
+      </div>
+
+      <div class="panel panel-default content"><!-- ng-repeat="user in users" -->
         <div class="panel-body">
-          <div class="box-section">
-            <a href="" ng-click="userPop(ride.user)">
-              <img src="toolbox/asset/images/default.png" width="100" height="100"/>
-            </a>
-          </div>
-          <div class="box-section">
-            <p>Nom : {{ user.name | uppercase }} {{ user.first }}</p>
-            <p>Âge : {{ user.birth }}</p>
-            <p>Bureau : {{ user.office }}</p>
-          </div>
-          <div class="box-section check">
-            <i class="fa fa-thumbs-up fa-2x text-info" aria-hidden="true"></i>{{ user.mark.up }}
-            <i class="fa fa-thumbs-down fa-2x text-danger" aria-hidden="true"></i>{{ user.mark.down }}
-          </div>
-        </div>
-        <div class="panel-footer">
-          <a href="" ng-click="details = true">Voir le Profil <i class="fa fa-chevron-right fa-1x"></i></a>
-        </div>
+          <table class="table-inbox">
+            <tr>
+              <td class="cell-s">
+                <a href="" ng-click="userPreview(user)">
+                  <img src="toolbox/asset/images/default.png" width="100" height="100"/>
+                </a>
+              </td>
+              <td>
+                <p ng-bind="'Nom :'+user.name | uppercase+' '+user.first"></p>
+                <p ng-bind="'Âge : '+user.birth "></p>
+                <p ng-bind="'Bureau : '+user.office"></p>
+                <i class="fa fa-thumbs-up fa-2x text-info" ng-bind="user.mark.up"></i>
+                <i class="fa fa-thumbs-down fa-2x text-danger" ng-bind="user.mark.down"></i>
+              </td>
+              <td>
+                <a href="" class="btn btn-primary" ng-click="#/profil/user.id">Voir le Profil <i class="fa fa-chevron-right fa-1x"></i></a>
+              </td>
+            </tr>
+          </table>
       </div>
 
     </div>
