@@ -23,7 +23,11 @@
 
 
 
-/** DECLARATION */
+/**
+*
+* MAIN DECLARATION
+*
+*/
 
 
 var shareApp = angular.module('shareApp',[
@@ -33,7 +37,11 @@ var shareApp = angular.module('shareApp',[
 ]);
 
 
-/** ROUTE */
+/**
+*
+* APP ROUTE
+*
+*/
 
 
 shareApp.config(['$routeProvider','$locationProvider',
@@ -60,9 +68,9 @@ shareApp.config(['$routeProvider','$locationProvider',
           templateUrl: 'views/profil.html',
           controller: 'profilCtrl'
         })
-        .when('/messaging',{
-            templateUrl: 'views/messaging.html',
-            controller: 'messagingCtrl'
+        .when('/message',{
+          templateUrl: 'views/message.html',
+          controller: 'messageCtrl'
         })
         .when('/about',{
             templateUrl: 'views/about.html',
@@ -76,7 +84,11 @@ shareApp.config(['$routeProvider','$locationProvider',
 
 
 
-/** DIRECTIVES */
+/**
+*
+* DIRECTIVES
+*
+*/
 
 
 
@@ -92,7 +104,14 @@ shareApp.directive('myNav',['$location',function($location){
         if(current[1] == 'profil') angular.element(document.querySelector('#profil')).addClass('active');
         else if(current[1] == 'users') angular.element(document.querySelector('#users')).addClass('active');
         else if(current[1] == 'rides') angular.element(document.querySelector('#rides')).addClass('active');
-        else if(current[1] == 'messaging') angular.element(document.querySelector('#messaging')).addClass('active');
+        else if(current[1] == 'message') angular.element(document.querySelector('#message')).addClass('active');
+
+        /*
+        $http.get(node_url)
+        .then(fucntion(res){
+          scope.unread = res.data;
+        },function(res){ console.log('FAIL : '+res.data); });
+        */
     }
   };
 }]);
@@ -257,68 +276,12 @@ shareApp.directive('datepicker',[
 ]);
 
 
-/** CONTROLLERS */
+/**
+*
+* CONTROLLERS MODULE
+*
+*/
 
 
 
 var shareAppControllers = angular.module('shareAppControllers',[]);
-
-
-//view : login
-shareAppControllers.controller('loginCtrl',['$scope',
-    function($scope){
-        $scope.reset = function(){
-            $scope.log = {};
-            angular.element(document.querySelector('#id, #pw')).removeClass('has-error');
-        }
-
-        $scope.login = function(log){
-            angular.element(document.querySelector('#id')).addClass('has-error');
-        }
-    }
-]);
-
-//view : my profile
-shareAppControllers.controller('profilCtrl',['$scope','$location',
-    function($scope,$location){
-        var url = $location.path().split(/\//g);
-        $scope.who = url[2];
-        
-    }
-]);
-
-//view : users
-shareAppControllers.controller('usersCtrl',['$scope','$location',
-    function($scope,$location){
-        $scope.current = $location.path();
-    }
-]);
-
-//view : report a user
-shareAppControllers.controller('reportCtrl',['$scope','$location',
-    function($scope,$location){
-        $scope.current = $location.path();
-    }
-]);
-
-//view : rides
-shareAppControllers.controller('ridesCtrl',['$scope','$location',
-    function($scope,$location){
-        $scope.current = $location.path();
-    }
-]);
-
-
-//view : messaging
-shareAppControllers.controller('messagingCtrl',['$scope','$location',
-    function($scope,$location){
-        $scope.current = $location.path();
-    }
-]);
-
-//view : about
-shareAppControllers.controller('aboutCtrl',['$scope','$location',
-    function($scope,$location){
-        $scope.current = $location.path();
-    }
-]);

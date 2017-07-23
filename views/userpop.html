@@ -1,4 +1,4 @@
-<div class="panel panel-primary user-pop" ng-show="show">
+<div class="panel panel-primary user-pop" ng-show="pop.show">
 
   <div class="panel-heading">
     <a class="close" aria-hidden="true" ng-click="close()">&times;</a>
@@ -7,15 +7,15 @@
 
   <div class="panel-body">
     <img src="toolbox/images/default.png" width="100" height="100"/>
-    <p>{{userpop.name | uppercase}} {{userpop.first}}, {{userpop.age}} ans</p>
-    <i class="fa fa-thumbs-up fa-2x text-info" aria-hidden="true">{{ userpop.mark.up }}</i>
-    <i class="fa fa-thumbs-down fa-2x text-danger" aria-hidden="true">{{ userpop.mark.down }}</i>
+    <p ng-bind="pop.name | uppercase + ' ' + pop.first + ', ' + pop.age + 'ans'"></p>
+    <i class="fa fa-thumbs-up fa-2x text-info" aria-hidden="true" ng-bind="pop.mark.up"></i>
+    <i class="fa fa-thumbs-down fa-2x text-danger" aria-hidden="true" ng-bind="pop.mark.down"></i>
     <table>
       <tr>
         <td class="table-icon"><i class="fa fa-car fa-2x text-success" aria-hidden="true"></i></td>
         <td class="table-info">
-          Marque : {{userpop.car.brand}}<br/>
-          Modèle : {{userpop.car.model}} ({{userpop.car.year}})
+          <p ng-bind="'Marque : ' + pop.car.brand"></p>
+          <p ng-bind="'Modèle : ' + userpop.car.model + ' (' + pop.car.year + ')'"></p>
         </td>
         <td class="table-icon"><i class="fa fa-map-marker fa-2x text-success" aria-hidden="true"></i></td>
         <td class="table-info"></td>
